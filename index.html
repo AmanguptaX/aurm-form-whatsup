@@ -1,0 +1,223 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bio AI Collection Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to bottom, #f10A0A, #000000);
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #121212;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+    }
+
+    .logo {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #f10A0A;
+      margin-bottom: 10px;
+    }
+
+    p.description {
+      color: #dddddd;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #f10A0A;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 14px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background-color: #1e1e1e;
+      color: #fff;
+      outline: none;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border: 1px solid #f10A0A;
+      box-shadow: 0 0 8px rgba(241, 10, 10, 0.5);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #999999;
+    }
+
+    select {
+      appearance: none;
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    input[type="datetime-local"] {
+      background-color: #1e1e1e;
+      color-scheme: light;
+    }
+
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      background-color: #f10A0A;
+      color: white;
+      padding: 14px;
+      border: none;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #c40606;
+      transform: scale(1.01);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 16px;
+      }
+
+      input[type="submit"] {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="logo.png" alt="Bio AI Logo" class="logo">
+
+    <h2>Bio AI Collection Form</h2>
+    <p class="description">
+      Welcome to the world of BIO AI technology. We are excited to partner with you as you take your first steps towards preventive care and enhancing your health span.
+    </p>
+
+    <form id="bioForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" placeholder="Your age" required>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required>
+          <option value="">-- Select --</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea id="address" name="address" rows="3" placeholder="Full residential address" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="pincode">Pincode</label>
+        <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" placeholder="6-digit PIN code" required>
+      </div>
+
+      <div class="form-group">
+        <label for="datetime">Time & Date</label>
+        <input type="datetime-local" id="datetime" name="datetime" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact No</label>
+        <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
+      </div>
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyRoVIQhoLjNpe6Aead5yEIoijEII4-p_D2SRo-SZmw6JiICszT2jY9HUCUWmKPhK7GSA/exec';
+
+    document.getElementById("bioForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        gender: document.getElementById("gender").value,
+        address: document.getElementById("address").value,
+        pincode: document.getElementById("pincode").value,
+        datetime: document.getElementById("datetime").value,
+        contact: document.getElementById("contact").value
+      };
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        alert("Form submitted successfully!");
+        document.getElementById("bioForm").reset();
+      })
+      .catch(error => {
+        alert("Error submitting form: " + error.message);
+      });
+    });
+  </script>
+
+</body>
+</html>
